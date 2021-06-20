@@ -19,13 +19,13 @@
                     </li>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="list_menu">
+                        <a class="nav-link" href="<?= base_url('dashboard/list_menu') ?>">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Menu</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="list_meja">
+                        <a class="nav-link" href="<?= base_url('dashboard/list_meja') ?>">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Meja</p>
                         </a>

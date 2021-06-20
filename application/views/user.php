@@ -7,10 +7,7 @@
                                     <h4 class="card-title">User</h4>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
-                                <button class="btn btn-success ml-2 my-4"   type="button" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fas fa-plus"></i>
-                                Tambah
-                                </button>
+
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>No</th>
@@ -33,10 +30,6 @@
                                                 <td>
                                                     <a href="<?= base_url('dashboard/delete_user/'.$user['id'])?>" class="btn btn-danger btn-circle">
                                                         <i class="fas fa-trash"></i>
-                                                </a>
-                                                
-                                                <a href="<?= base_url('dashboard/edit_user/'.$user['id'])?>" class="btn btn-primary btn-circle">
-                                                             Edit
                                                 </a>
                                             </tr>
                                             <?php

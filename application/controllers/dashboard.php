@@ -559,6 +559,7 @@ class Dashboard extends CI_Controller {
                                       // Free up the resources $curl is using
                                       curl_close($curl);
                               
+
                                       $getMenu = json_decode($result,true);
                                       $menu['datamenu'] = $getMenu['status'];
                         
@@ -618,7 +619,261 @@ class Dashboard extends CI_Controller {
                                 }
                             }
                           }
-        }
+                          public function edit_order($id){
+                            if($this->session->userdata('token') == ''){
+                              return redirect(base_url('dashboard/login'));
+                            }else{
+                              if($this->session->userdata('isLoginAdmin') == true){
+                                $data = [
+                                  'username' => $this->session->userdata('username'),
+                                  'title' => 'Dashboard | Menu'
+                                ];
+                                $url = base_url('/api/main/order/id/'.$id);
+                                $curl = curl_init($url);
+                                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+                            
+                                curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                  'Authorization: Bearer '.$this->session->userdata('token')
+                                  )
+                                );
+                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                // Send the request
+                                $result = curl_exec($curl);
+                                // Free up the resources $curl is using
+                                curl_close($curl);
+                        
+                                $getMenu = json_decode($result,true);
+                                $menu['datamenu'] = $getMenu['data'];
+                        
+                        
+                        
+                                $this->load->view('layout/header',$data);
+                                $this->load->view('layout/sidebar');
+                                $this->load->view('layout/navbar',$data);
+                                $this->load->view('edit_order',$menu);
+                                $this->load->view('layout/footer');
+                              }
+                            }
+      
+                          }     
+                          public function proses_edit_order($id){
+                            if($this->session->userdata('token') == ''){
+                              return redirect(base_url('dashboard/login'));
+                            }else{
+                              if($this->session->userdata('isLoginAdmin') == true){
+                                $data = [
+                                  'username' => $this->session->userdata('username'),
+                                  'title' => 'Dashboard | Order'
+                                ];
+                                $dataCreate = [
+                                  'no_meja'=> $this->input->post('no_meja'),
+                                  'waktu_order'=> $this->input->post('waktu_order'),
+                                ];
+                          
+                                $url = base_url('/api/main/order/id/'.$id);
+                                $curl = curl_init($url);
+                                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+                            
+                                curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                  'Authorization: Bearer '.$this->session->userdata('token')
+                                  )
+                                );
+                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                // Send the request
+                                $result = curl_exec($curl);
+                                // Free up the resources $curl is using
+                                curl_close($curl);
+                          
+                                $getMenu = json_decode($result,true);
+                                $datamenu = $getMenu['data'];
+                          
+                          
+                                      $dataPut= json_encode($dataCreate);
+                          
+                          
+                                      // var_dump($dataCreate);die();
+                                      $url = base_url('/api/main/order/id/'.$id);
+                                      $curl = curl_init($url);
+                                      curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+                                  
+                                      curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                        'Authorization: Bearer '.$this->session->userdata('token'),
+                                        'Content-Type:application/json'
+                                        )
+                                      );
+                          
+                                      /* Set JSON data to POST */
+                                      curl_setopt($curl, CURLOPT_POSTFIELDS, $dataPut);
+                              
+                                      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                      // Send the request
+                                      $result = curl_exec($curl);
+                                      // Free up the resources $curl is using
+                                      curl_close($curl);
+                              
+                                      $getMenu = json_decode($result,true);
+                                      $menu['datamenu'] = $getMenu['status'];
+                              
+                                      echo ("<script LANGUAGE='JavaScript'>
+                                      window.alert('Berhasil di edit');
+                                      window.location.href='".base_url('dashboard/list_order')."';
+                                      </script>");
+                                      return;
+                          
+                              }
+                            }
+                          } 
+                          public function create_meja(){
+                            if($this->session->userdata('token') == ''){
+                              return redirect(base_url('dashboard/login'));
+                            }else{
+                              if($this->session->userdata('isLoginAdmin') == true){
+                                $data = [
+                                  'username' => $this->session->userdata('username'),
+                                  'title' => 'Dashboard | Menu'
+                                ];
+                                $dataCreate = [
+                                  'no_meja'=> $this->input->post('no_meja'),
+                                ];
+                        
+                
+                      
+                                    $url = base_url('/api/main/meja');
+                                    $curl = curl_init($url);
+                                    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+                                
+                                    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                      'Authorization: Bearer '.$this->session->userdata('token')
+                                      )
+                                    );
+                            
+                                    /* Set JSON data to POST */
+                                    curl_setopt($curl, CURLOPT_POSTFIELDS, $dataCreate);
+                            
+                                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                    // Send the request
+                                    $result = curl_exec($curl);
+                                    // Free up the resources $curl is using
+                                    curl_close($curl);
+                            
+                                    $getOrder = json_decode($result,true);
+                                    $order['datamenu'] = $getOrder['data'];
+                            
+                                    
+                                    echo ("<script LANGUAGE='JavaScript'>
+                                    window.alert('Berhasil di simpan');
+                                    window.location.href='".base_url('dashboard/list_meja')."';
+                                    </script>");
+                                    return;
+                      
+                                }
+                            }
+                          }  
+                          public function edit_meja($id){
+                            if($this->session->userdata('token') == ''){
+                              return redirect(base_url('dashboard/login'));
+                            }else{
+                              if($this->session->userdata('isLoginAdmin') == true){
+                                $data = [
+                                  'username' => $this->session->userdata('username'),
+                                  'title' => 'Dashboard | Menu'
+                                ];
+                                $url = base_url('/api/main/meja/id/'.$id);
+                                $curl = curl_init($url);
+                                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+                            
+                                curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                  'Authorization: Bearer '.$this->session->userdata('token')
+                                  )
+                                );
+                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                // Send the request
+                                $result = curl_exec($curl);
+                                // Free up the resources $curl is using
+                                curl_close($curl);
+                        
+                                $getMenu = json_decode($result,true);
+                                $menu['datamenu'] = $getMenu['data'];
+                        
+                        
+                        
+                                $this->load->view('layout/header',$data);
+                                $this->load->view('layout/sidebar');
+                                $this->load->view('layout/navbar',$data);
+                                $this->load->view('edit_meja',$menu);
+                                $this->load->view('layout/footer');
+                              }
+                            }
+      
+                          }  
+                          public function proses_edit_meja($id){
+                            if($this->session->userdata('token') == ''){
+                              return redirect(base_url('dashboard/login'));
+                            }else{
+                              if($this->session->userdata('isLoginAdmin') == true){
+                                $data = [
+                                  'username' => $this->session->userdata('username'),
+                                  'title' => 'Dashboard | Meja'
+                                ];
+                                $dataCreate = [
+                                  'no_meja'=> $this->input->post('no_meja'),
+                                  'waktu_order'=> $this->input->post('waktu_order'),
+                                ];
+                          
+                                $url = base_url('/api/main/meja/id/'.$id);
+                                $curl = curl_init($url);
+                                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+                            
+                                curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                  'Authorization: Bearer '.$this->session->userdata('token')
+                                  )
+                                );
+                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                // Send the request
+                                $result = curl_exec($curl);
+                                // Free up the resources $curl is using
+                                curl_close($curl);
+                          
+                                $getMenu = json_decode($result,true);
+                                $datamenu = $getMenu['data'];
+                          
+                          
+                                      $dataPut= json_encode($dataCreate);
+                          
+                          
+                                      // var_dump($dataCreate);die();
+                                      $url = base_url('/api/main/meja/id/'.$id);
+                                      $curl = curl_init($url);
+                                      curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+                                  
+                                      curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                        'Authorization: Bearer '.$this->session->userdata('token'),
+                                        'Content-Type:application/json'
+                                        )
+                                      );
+                          
+                                      /* Set JSON data to POST */
+                                      curl_setopt($curl, CURLOPT_POSTFIELDS, $dataPut);
+                              
+                                      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                      // Send the request
+                                      $result = curl_exec($curl);
+                                      // Free up the resources $curl is using
+                                      curl_close($curl);
+                              
+                                      $getMenu = json_decode($result,true);
+                                      $menu['datamenu'] = $getMenu['status'];
+                              
+                                      echo ("<script LANGUAGE='JavaScript'>
+                                      window.alert('Berhasil di edit');
+                                      window.location.href='".base_url('dashboard/list_meja')."';
+                                      </script>");
+                                      return;
+                          
+                              }
+                            }
+                          }                    
+                        }
           
 
        
