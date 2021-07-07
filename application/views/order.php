@@ -30,7 +30,7 @@
                                                 <td><?= $user['waktu_order'];?></td>
                                                 <td>
                                                     <a href="<?= base_url('dashboard/delete_order/'.$user['id'])?>" class="btn btn-danger btn-circle">
-                                                        <i class="fas fa-trash"></i>
+                                                    Delete
                                                 </a>
                                                 
                                                 <a href="<?= base_url('dashboard/edit_order/'.$user['id'])?>" class="btn btn-primary btn-circle">

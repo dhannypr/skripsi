@@ -29,7 +29,7 @@
                                                 <td><?= $user['role'];?></td>
                                                 <td>
                                                     <a href="<?= base_url('dashboard/delete_user/'.$user['id'])?>" class="btn btn-danger btn-circle">
-                                                        <i class="fas fa-trash"></i>
+                                                    Delete
                                                 </a>
                                             </tr>
                                             <?php
