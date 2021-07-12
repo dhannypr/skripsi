@@ -169,7 +169,7 @@ class Dashboard extends CI_Controller {
                 'username' => $this->session->userdata('username'),
                 'title' => 'Dashboard | User'
               ];
-          $url = base_url('/api/main/order');
+          $url = base_url('/api/main/pesanan');
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
         

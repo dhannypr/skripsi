@@ -7,16 +7,12 @@
                                     <h4 class="card-title">Order</h4>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
-                                <button class="btn btn-success ml-2 my-4"   type="button" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fas fa-plus"></i>
-                                Tambah
-                                </button>
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>No</th>
                                             <th>No Meja</th>
                                             <th>Waktu Order</th>
-                                            <th>Action</th>
+                                            <th>Item Order</th>
                                         </thead>
                                         <tbody>
                                             <?php
@@ -26,16 +22,10 @@
                                                 ?>
                                             <tr>
                                                 <td><?= $no;?></td>
-                                                <td><?= $user['no_meja'];?></td>
-                                                <td><?= $user['waktu_order'];?></td>
-                                                <td>
-                                                    <a href="<?= base_url('dashboard/delete_order/'.$user['id'])?>" class="btn btn-danger btn-circle">
-                                                    Delete
-                                                </a>
-                                                
-                                                <a href="<?= base_url('dashboard/edit_order/'.$user['id'])?>" class="btn btn-primary btn-circle">
-                                                             Edit
-                                                </a>
+                                                <td><?= $user['meja'];?></td>
+                                                <td><?= $user['tanggal'];?></td>
+                                                <td><?= $user['item'];?></td>
+                                               
                                             </tr>
                                             <?php
                                             $no++;
