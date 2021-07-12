@@ -14,6 +14,7 @@
                                     <table class="table table-hover table-striped">
                                         <thead>
                                             <th>No</th>
+                                            <th>Kode QR</th>
                                             <th>No Meja</th>
                                             <th>Action</th>
                                         </thead>
@@ -24,6 +25,7 @@
                                                 ?>
                                             <tr>
                                                 <td><?= $no;?></td>
+                                                <td><img src="<?= base_url('uploads/'.$user['barcode']) ?>" alt="" width="100"></td>
                                                 <td><?= $user['no_meja'];?></td>
                                                 <td>
                                                     <a href="<?= base_url('dashboard/delete_meja/'.$user['id'])?>" class="btn btn-danger btn-circle">

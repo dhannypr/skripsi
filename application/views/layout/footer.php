@@ -99,14 +99,43 @@
 <script src="<?= base_url('assets/js/light-bootstrap-dashboard.js?v=2.0.0')?> " type="text/javascript"></script>
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
 <script src="<?= base_url('assets/js/demo.js')?>"></script>
+<script src="<?= base_url('assets/js/instascan.min.js')?>"></script>
 <script type="text/javascript">
+   
+
+   let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
+    scanner.addListener('scan', function(content){
+        let inputan = $("#hasil").val(content);
+
+        if(inputan){
+            $("#menu").show()
+            $("#scan").show()
+          
+        }else{
+            $("#menu").hide()
+            $("#scan").hide()
+            
+        }
+    });
+
+    Instascan.Camera.getCameras().then(function(cameras){
+        if(cameras.length > 0 ){
+            scanner.start(cameras[0]);
+        }else{
+            console.error('no camera found')
+        }
+    }).catch(function(e){
+        console.log(e);
+    })
+
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
-
-        demo.showNotification();
+        $("#menu").hide()
+        $("#scan").hide()
+       
 
     });
+
 </script>
 
 </html>

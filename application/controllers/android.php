@@ -12,31 +12,17 @@ class Android extends CI_Controller {
           'username' => $this->session->userdata('username'),
           'title' => 'Dashboard | Home'
         ];
-
-
-        $url = base_url('/api/main/menu');
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-    
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-          'Authorization: Bearer '.$this->session->userdata('token')
-          )
-        );
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
-        // Send the request
-        $result = curl_exec($curl);
-        // Free up the resources $curl is using
-        curl_close($curl);
-
-        $getMenu = json_decode($result,true);
-        $menu['datamenu'] = $getMenu['data'];
         
-      
+        if($this->session->userdata('meja')){
+          $datameja['cekmeja'] = 0;
+        }else{
+          $datameja['cekmeja'] = 0;
+        }
 
         $this->load->view('layout/header');
-        $this->load->view('layout/sidebarandroid');
+        $this->load->view('layout/sidebarandroid',$datameja);
         $this->load->view('layout/navbarandroid',$data);
-        $this->load->view('home',$menu);
+        $this->load->view('home');
         $this->load->view('layout/footer');
       }
     }
@@ -113,6 +99,67 @@ class Android extends CI_Controller {
     }
     return redirect(base_url('android/login'));
   }
+
+
+  public function submit_meja(){
+    if($this->session->userdata('token') == ''){
+      return redirect(base_url('dashboard/login'));
+    }else{
+      if($this->session->userdata('isLoginAdmin') == true){
+        $data = [
+          'username' => $this->session->userdata('username'),
+          'title' => 'Dashboard | Menu'
+        ];
+          $meja =  $this->input->post('meja');
+
+          $this->session->set_userdata('meja', $meja);
+          return redirect(base_url('android/menu_utama'));
+      }
+    }
+  }
+  public function menu_utama(){
+    if($this->session->userdata('token') == ''){
+      return redirect(base_url('android/login'));
+    }else{
+      if($this->session->userdata('isLoginAdmin') == true){
+        $data = [
+          'username' => $this->session->userdata('username'),
+          'title' => 'Dashboard | Home'
+        ];
+        
+        $url = base_url('/api/main/menu');
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+    
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+          'Authorization: Bearer '.$this->session->userdata('token')
+          )
+        );
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+        // Send the request
+        $result = curl_exec($curl);
+        // Free up the resources $curl is using
+        curl_close($curl);
+
+        $getMenu = json_decode($result,true);
+        $datameja['datamenu'] = $getMenu['data'];
+        $datameja['meja'] = $this->session->userdata('meja');
+
+        if($this->session->userdata('meja')){
+          $datameja['cekmeja'] = 1;
+        }else{
+          $datameja['cekmeja'] = 0;
+        }
+
+        $this->load->view('layout/header');
+        $this->load->view('layout/sidebarandroid',$datameja);
+        $this->load->view('layout/navbarandroid',$data);
+        $this->load->view('menuandroid',$datameja);
+        $this->load->view('layout/footer');
+      }
+    }
+  }
+
   public function user(){
     if($this->session->userdata('token') == ''){
       return redirect(base_url('dashboard/login'));
@@ -509,11 +556,12 @@ class Android extends CI_Controller {
 
         $dataCreate = [
           'idmenu' => $id,
-          'namamenu' => $menu[0]['nama'],
+          'name' => $menu[0]['name'],
           'user' => $this->session->userdata('username'),
-          'harga'  => $menu[0]['harga'],
+          'price'  => $menu[0]['price'],
           'qty'  => 1,
-          'subtotal'  => $menu[0]['harga'] * 1,
+          'subtotal'  => $menu[0]['price'] * 1,
+          'meja' => $this->session->userdata('meja'),
         ];
 
         $url = base_url('/api/main/cart');
@@ -539,8 +587,8 @@ class Android extends CI_Controller {
 
         
         echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Berhasil di tambahkan');
-        window.location.href='".base_url('android')."';
+        window.alert('Berhasil di tambahkan ke keranjang');
+        window.location.href='".base_url('android/menu_utama')."';
         </script>");
         return;
 
@@ -573,9 +621,15 @@ class Android extends CI_Controller {
 
         $getMenu = json_decode($result,true);
         $menu['datamenu'] = $getMenu['data'];
+
+        if($this->session->userdata('meja')){
+          $datameja['cekmeja'] = 1;
+        }else{
+          $datameja['cekmeja'] = 0;
+        }
         
         $this->load->view('layout/header',$data);
-        $this->load->view('layout/sidebarandroid');
+        $this->load->view('layout/sidebarandroid',$datameja);
         $this->load->view('layout/navbarandroid',$data);
         $this->load->view('keranjang',$menu);
         $this->load->view('layout/footer');
@@ -649,6 +703,7 @@ class Android extends CI_Controller {
         $dataCreate = [
           'tanggal' => date("Y-m-d"),     
           'nama' => $this->session->userdata('username'),
+          'meja' => $this->session->userdata('meja'),
           'item'  => json_encode($menu['datamenu'])
         ];
 
@@ -676,7 +731,7 @@ class Android extends CI_Controller {
         
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Berhasil di pesan');
-        window.location.href='".base_url('android')."';
+        window.location.href='".base_url('android/pesanan')."';
         </script>");
         return;
       }
@@ -710,10 +765,17 @@ class Android extends CI_Controller {
         $getMenu = json_decode($result,true);
         $menu['datamenu'] = $getMenu['data'];
         
+        if($this->session->userdata('meja')){
+          $datameja['cekmeja'] = 1;
+        }else{
+          $datameja['cekmeja'] = 0;
+        }
+
+
         $this->load->view('layout/header',$data);
-        $this->load->view('layout/sidebarandroid');
+        $this->load->view('layout/sidebarandroid',$datameja);
         $this->load->view('layout/navbarandroid',$data);
-        $this->load->view('pesanan',$menu);
+        $this->load->view('pesananandroid',$menu);
         $this->load->view('layout/footer');
       }
     }

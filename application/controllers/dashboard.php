@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
+  public function __construct(){
+    parent::__construct();
+    $this->load->library('form_validation');
+}
+
    public function index(){
 
     if($this->session->userdata('token') == ''){
@@ -736,7 +741,27 @@ class Dashboard extends CI_Controller {
                                   'no_meja'=> $this->input->post('no_meja'),
                                 ];
                         
+                                $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+ 
+                                $config['cacheable']    = true; //boolean, the default is true
+                                $config['cachedir']     = './uploads/'; //string, the default is application/cache/
+                                $config['errorlog']     = './uploads/'; //string, the default is application/logs/
+                                $config['imagedir']     = './uploads/'; //direktori penyimpanan qr code
+                                $config['quality']      = true; //boolean, the default is true
+                                $config['size']         = '1024'; //interger, the default is 1024
+                                $config['black']        = array(224,255,255); // array, default is array(255,255,255)
+                                $config['white']        = array(70,130,180); // array, default is array(0,0,0)
+                                $this->ciqrcode->initialize($config);
+                         
+                                $image_name=$dataCreate['no_meja'].date('ymdhis').'.png'; //buat name dari qr code sesuai dengan nim
+                         
+                                $params['data'] = $dataCreate['no_meja']; //data yang akan di jadikan QR CODE
+                                $params['level'] = 'H'; //H=High
+                                $params['size'] = 10;
+                                $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
+                                $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
                 
+                                $dataCreate['barcode']= $image_name;
                       
                                     $url = base_url('/api/main/meja');
                                     $curl = curl_init($url);
@@ -817,9 +842,32 @@ class Dashboard extends CI_Controller {
                                 ];
                                 $dataCreate = [
                                   'no_meja'=> $this->input->post('no_meja'),
-                                  'waktu_order'=> $this->input->post('waktu_order'),
                                 ];
                           
+                                $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+ 
+                                $config['cacheable']    = true; //boolean, the default is true
+                                $config['cachedir']     = './uploads/'; //string, the default is application/cache/
+                                $config['errorlog']     = './uploads/'; //string, the default is application/logs/
+                                $config['imagedir']     = './uploads/'; //direktori penyimpanan qr code
+                                $config['quality']      = true; //boolean, the default is true
+                                $config['size']         = '1024'; //interger, the default is 1024
+                                $config['black']        = array(224,255,255); // array, default is array(255,255,255)
+                                $config['white']        = array(70,130,180); // array, default is array(0,0,0)
+                                $this->ciqrcode->initialize($config);
+                         
+                                $image_name=$dataCreate['no_meja'].date('ymdhis').'.png'; //buat name dari qr code sesuai dengan nim
+                         
+                                $params['data'] = $dataCreate['no_meja']; //data yang akan di jadikan QR CODE
+                                $params['level'] = 'H'; //H=High
+                                $params['size'] = 10;
+                                $params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
+                                $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+                
+                                $dataCreate['barcode']= $image_name;
+              
+
+
                                 $url = base_url('/api/main/meja/id/'.$id);
                                 $curl = curl_init($url);
                                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");

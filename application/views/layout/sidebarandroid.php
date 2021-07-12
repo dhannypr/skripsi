@@ -1,48 +1,40 @@
-<!-- Page Wrapper -->
-<div id="wrapper">
+<div class="sidebar" data-image="../assets/img/sidebar-5.jpg">
+            <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
-<!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-       
-        <div class="sidebar-brand-text mx-3">RM Haji Muhammad</div>
-    </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('android')?>">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Menu Utama</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('android/cart')?>">
-            <i class="fas fa-fw fa-pen"></i>
-            <span>Keranjang</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('android/pesanan')?>">
-            <i class="fas fa-fw fa-list"></i>
-            <span>Pesanan Kamu</span></a>
-    </li>
-
-  
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-
-
-
-</ul>
+        Tip 2: you can also add an image using data-image tag
+    -->
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="<?= base_url('android') ?>" class="simple-text">
+                        Kopi Enuk
+                    </a>
+                </div>
+                <ul class="nav">
+                    <?php 
+                        if($cekmeja == 1){
+                    ?>        
+                    <li class="nav-item active" id="ourmenu">
+                        <a class="nav-link" href="<?= base_url('android/menu_utama') ?>">
+                            <i class="nc-icon nc-chart-pie-35"></i>
+                            <p>Our Menu</p>
+                        </a>
+                    </li>
+                    <li id="cart">
+                        <a class="nav-link" href="<?= base_url('android/cart') ?>">
+                            <i class="nc-icon nc-circle-09"></i>
+                            <p>Keranjang Saya</p>
+                        </a>
+                    </li>
+                    <li id="order">
+                        <a class="nav-link" href="<?= base_url('android/pesanan') ?>">
+                            <i class="nc-icon nc-notes"></i>
+                            <p>Pesanan Saya</p>
+                        </a>
+                    </li>
+                  <?php  
+                }
+                ?>
+                </ul>
+            </div>
+        </div>

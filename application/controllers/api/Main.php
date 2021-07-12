@@ -324,11 +324,13 @@ public function menu_delete()
     }
     public function meja_post(){
         $no_meja = $this->post('no_meja');
+        $barcode = $this->post('barcode');
 
 
         $data = [
 
-        "no_meja"=>$no_meja
+        "no_meja"=>$no_meja,
+        "barcode"=>$barcode
         ];
 
         $createMeja = $this->Crud->createData('table_meja',$data);
@@ -362,7 +364,7 @@ public function menu_delete()
 
        if ($id == NULL)
        {
-           $getMeja =  $this->Crud->readData('id,no_meja','table_meja')->result();
+           $getMeja =  $this->Crud->readData('id,no_meja,barcode','table_meja')->result();
            if ($getMeja)
            {
                // set the response and exit
@@ -391,7 +393,7 @@ public function menu_delete()
            $where =[
                'id'=> $id
            ];
-           $getMejaById = $this->Crud->readData('id,no_meja','table_meja',$where)->result();
+           $getMejaById = $this->Crud->readData('id,no_meja,barcode','table_meja',$where)->result();
 
            if($getMejaById){
                $output = [
@@ -423,6 +425,7 @@ public function menu_delete()
         if($cekId > 0){
             $data = [
                 "no_meja"   => $this->put('no_meja'),
+                "barcode"   => $this->put('barcode')
             ];
 
             $updateData = $this->Crud->updateData('table_meja',$data,$where);
@@ -645,4 +648,229 @@ public function menu_delete()
         }
     }
 
+    public function  cart_post(){
+        $name = $this->post('name');
+        $idmenu = $this->post('idmenu');
+        $user = $this->post('user');
+        $qty  = $this->post('qty');
+        $subtotal  = $this->post('subtotal');
+        $price  = $this->post('price');
+        $meja  = $this->post('meja');
+        $dataArray = [
+            "name"=>$name,
+            "idmenu"=>$idmenu,
+            "user"=>$user,
+            "qty"=>$qty,
+            "price"=>$price,
+            "subtotal"=>$subtotal,
+            "meja"=>$meja,
+        ];
+
+        $createUser = $this->Crud->createData('keranjang',$dataArray);
+                
+        if($createUser){
+            $output = [
+                'status' => 200,
+                'error' => false,
+                'message' => 'Success create cart',
+                'data'=> $dataArray
+            ];
+            $this->set_response($output, REST_Controller::HTTP_OK); 
+        }else{
+            $output = [
+                'status' => 400,
+                'error' => false,
+                'message' =>'Failed create cart',
+                'data'=> []
+            ];
+            $this->set_response($output, REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function cart_get($user)
+    {
+        if($user){
+            $where = [
+                'user'=> $user
+            ];
+            $getUserById = $this->Crud->readData('*','keranjang',$where)->result();
+
+            if($getUserById){
+                $output = [
+                    'status' => 200,
+                    'error' => false,
+                    'message' => 'Success get cart',
+                    'data'=> $getUserById
+                ];
+                $this->response($output, REST_Controller::HTTP_OK);
+            }else{
+                $output = [
+                    'status' => 404,
+                    'error' => false,
+                    'message' => 'Failed get cart or user Not found',
+                    'data'=> []
+                ];
+                $this->response($output, REST_Controller::HTTP_NOT_FOUND); 
+            }
+        }
+
+    }
+
+    public function cart_delete()
+    {
+
+        $id = (int) $this->get('id');
+
+        if($id){
+            $where = [
+                'id'=> $id
+            ];
+            $cekId = $this->Crud->readData('id','keranjang',$where)->num_rows();
+
+            if($cekId > 0){
+                
+                $this->Crud->deleteData('keranjang',$where);
+                $output = [
+                    'status' => 200,
+                    'error' => false,
+                    'message' => 'Success delete cart',
+                ];
+                $this->response($output, REST_Controller::HTTP_OK);
+            }else{
+                $output = [
+                    'status' => 404,
+                    'error' => false,
+                    'message' => 'Failed delete cart or id not found',
+                ];
+                $this->response($output, REST_Controller::HTTP_NOT_FOUND); 
+            }
+        }
+    }
+
+    public function  pesanan_post(){
+        $tanggal = $this->post('tanggal');
+        $nama = $this->post('nama');
+        $item = $this->post('item');
+        $meja = $this->post('meja');
+      
+
+        $itemnya =  json_encode($item);
+
+        $dataArray = [
+            "tanggal" => $tanggal,
+            "nama" => $nama,
+            "item"=> $itemnya,
+            "meja" => $meja,
+        ];
+
+        $createUser = $this->Crud->createData('pesanan',$dataArray);
+                
+        if($createUser){
+            $output = [
+                'status' => 200,
+                'error' => false,
+                'message' => 'Success create order',
+                'data'=> $dataArray
+            ];
+            $this->set_response($output, REST_Controller::HTTP_OK); 
+        }else{
+            $output = [
+                'status' => 400,
+                'error' => false,
+                'message' =>'Failed create order',
+                'data'=> []
+            ];
+            $this->set_response($output, REST_Controller::HTTP_BAD_REQUEST);
+        }
+    }
+
+
+    public function pesanan_get()
+    {
+
+        $id = $this->get('id');
+
+
+        if ($id === NULL)
+        {
+            $getUser = $this->Crud->readData('*','pesanan')->result();
+            if ($getUser)
+            {
+                // Set the response and exit
+                $output = [
+                    'status' => 200,
+                    'error' => false,
+                    'message' => 'Success get pesanan',
+                    'data'=> $getUser
+                ];
+                $this->response($output, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+            }
+            else
+            {
+                // Set the response and exit
+                $output = [
+                    'status' => 404,
+                    'error' => false,
+                    'message' => 'No pesananan were found',
+                    'data'=> []
+                ];
+                $this->response($output, REST_Controller::HTTP_NOT_FOUND); // NOT_FOUND (404) being the HTTP response code
+            }
+        }
+
+        if($id){
+            $where = [
+                'id'=> $id
+            ];
+            $getUserById = $this->Crud->readData('*','menu',$where)->result();
+
+            if($getUserById){
+                $output = [
+                    'status' => 200,
+                    'error' => false,
+                    'message' => 'Success get pesanan',
+                    'data'=> $getUserById
+                ];
+                $this->response($output, REST_Controller::HTTP_OK);
+            }else{
+                $output = [
+                    'status' => 404,
+                    'error' => false,
+                    'message' => 'Failed get pesanan or id Not found',
+                    'data'=> []
+                ];
+                $this->response($output, REST_Controller::HTTP_NOT_FOUND); 
+            }
+        }
+
+    }
+
+    public function pesananpribadi_get($user)
+    {
+        if($user){
+            $where = [
+                'nama'=> $user
+            ];
+            $getUserById = $this->Crud->readData('*','pesanan',$where)->result();
+
+            if($getUserById){
+                $output = [
+                    'status' => 200,
+                    'error' => false,
+                    'message' => 'Success get pesanan',
+                    'data'=> $getUserById
+                ];
+                $this->response($output, REST_Controller::HTTP_OK);
+            }else{
+                $output = [
+                    'status' => 404,
+                    'error' => false,
+                    'message' => 'Failed get pesanan or user Not found',
+                    'data'=> []
+                ];
+                $this->response($output, REST_Controller::HTTP_NOT_FOUND); 
+            }
+        }
+
+    }
 }

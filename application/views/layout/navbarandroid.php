@@ -1,48 +1,27 @@
-<!-- Page Wrapper -->
-<div id="wrapper">
-
-<!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-       
-        <div class="sidebar-brand-text mx-3">RM Haji Muhammad</div>
-    </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('android')?>">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Menu Utama</span></a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('android/cart')?>">
-            <i class="fas fa-fw fa-pen"></i>
-            <span>Keranjang</span></a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('android/pesanan')?>">
-            <i class="fas fa-fw fa-list"></i>
-            <span>Pesanan Kamu</span></a>
-    </li>
-
-  
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+<div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#pablo"> Selamat Datang </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="nav navbar-nav mr-auto">
+                           
+                           
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
 
 
-
-</ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= base_url('android/logout') ?>">
+                                <i class="nc-icon nc-user-01"></i>Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>

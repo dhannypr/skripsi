@@ -1,116 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Dashboard</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-
-  <style>
-  body {
-    font-family: "Lato", sans-serif;
-}
-
-
-
-.main-head{
-    height: 150px;
-    background: #FFF;
-   
-}
-
-.sidenav {
-    height: 100%;
-    background-color: #4e73df;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-
-.main {
-    padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-}
-
-@media screen and (max-width: 450px) {
-    .login-form{
-        margin-top: 10%;
-    }
-
-    .register-form{
-        margin-top: 10%;
-    }
-}
-
-@media screen and (min-width: 768px){
-    .main{
-        margin-left: 40%; 
-    }
-
-    .sidenav{
-        width: 40%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-    }
-
-    .login-form{
-        margin-top: 80%;
-    }
-
-    .register-form{
-        margin-top: 20%;
-    }
-}
-
-
-.login-main-text{
-    margin-top: 20%;
-    padding: 60px;
-    color: #fff;
-}
-
-.login-main-text h2{
-    font-weight: 300;
-}
-
-.btn-black{
-    background-color: #4e73df !important;
-    color: #fff;
-}</style>
+	<meta charset="utf-8">
+	<meta name="author" content="Kodinger">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>My Login Page</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/my-login.css') ?>">
 </head>
-<body>
-  
-    <div class="sidenav">
-         <div class="login-main-text">
-            <p>Silahkan masuk atau <u><a href="" style="color:yellow;">mendaftar</a></u>  untuk mengakses.</p>
-         </div>
-      </div>
-      <div class="main">
-         <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-               <form action="<?= base_url('android/prosesLogin') ?>" method="POST">
-                  <div class="form-group">
-                     <label>Username</label>
-                     <input type="text" name="username" class="form-control" placeholder="User Name" required>
-                  </div>
-                  
-                  <div class="form-group">
-                     <label>Password</label>
-                     <input type="password" name="password" class="form-control" placeholder="Password" required>
-                  </div>
-                  <button type="submit" class="btn btn-black">Login</button>
-               </form>
-            </div>
-         </div>
-      </div>
+
+<body class="my-login-page" style="margin-top: 200px;">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title">Login</h4>
+							<form action="<?= base_url('android/prosesLogin') ?>" method="POST" class="my-login-validation" novalidate="">
+								<div class="form-group">
+									<label for="email">Username</label>
+									<input id="email" type="text" class="form-control" name="username" value="" required autofocus>
+									<div class="invalid-feedback">
+										Username is invalid
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="password">Password
+									</label>
+									<input id="password" type="password" class="form-control" name="password" required data-eye>
+								    <div class="invalid-feedback">
+								    	Password is required
+							    	</div>
+								</div>
+
+
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-primary btn-block">
+										Login
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="js/my-login.js"></script>
 </body>
 </html>
