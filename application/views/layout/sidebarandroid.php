@@ -15,7 +15,7 @@
                         if($cekmeja == 1){
                     ?>        
                     <li class="nav-item active" id="ourmenu">
-                        <a class="nav-link" href="<?= base_url('android/menu_utama') ?>">
+                        <a class="nav-link" href="<?= base_url('android/menu_utama/'.$this->session->userdata('meja')) ?>">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Our Menu</p>
                         </a>

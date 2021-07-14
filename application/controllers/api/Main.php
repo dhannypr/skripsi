@@ -7,7 +7,6 @@ class Main extends BD_Controller {
     {
         // Construct the parent class
         parent::__construct();
-        $this->auth();
         $this->load->model('Crud');
     }
 	
@@ -21,6 +20,8 @@ class Main extends BD_Controller {
 
     public function users_get()
    {
+    $this->auth();
+
        $id = $this->get('id');
 
        if ($id == NULL)
@@ -77,6 +78,7 @@ class Main extends BD_Controller {
    }
 
    public function users_put(){
+    $this->auth();
 
     $id = (int) $this->get('id');
     if($id){
@@ -124,6 +126,7 @@ class Main extends BD_Controller {
 
     public function users_delete()
     {
+        $this->auth();
 
         $id = (int) $this->get('id');
 
@@ -154,6 +157,9 @@ class Main extends BD_Controller {
     }
 
     public function menu_post(){
+
+        $this->auth();
+
         $name = $this->post('name');
         $type = $this->post('type');
         $image = $this->post('image');
@@ -249,6 +255,8 @@ class Main extends BD_Controller {
        }
    }
    public function menu_put(){
+    $this->auth();
+
     $id = (int) $this->get('id');
     if($id){
         $where = [
@@ -294,6 +302,7 @@ class Main extends BD_Controller {
 
 public function menu_delete()
     {
+        $this->auth();
 
         $id = (int) $this->get('id');
 
@@ -323,6 +332,8 @@ public function menu_delete()
         }
     }
     public function meja_post(){
+        $this->auth();
+
         $no_meja = $this->post('no_meja');
         $barcode = $this->post('barcode');
 
@@ -360,6 +371,8 @@ public function menu_delete()
 
     public function meja_get()
    {
+    $this->auth();
+
        $id = $this->get('id');
 
        if ($id == NULL)
@@ -415,6 +428,8 @@ public function menu_delete()
        }
    }
    public function meja_put(){
+    $this->auth();
+
     $id = (int) $this->get('id');
     if($id){
         $where = [
@@ -457,6 +472,7 @@ public function menu_delete()
     }
     public function meja_delete()
     {
+        $this->auth();
 
         $id = (int) $this->get('id');
 
@@ -486,6 +502,8 @@ public function menu_delete()
         }
     }
     public function order_post(){
+        $this->auth();
+
         $no_meja = $this->post('no_meja');
         $waktu_order = $this->post('waktu_order');
  
@@ -522,6 +540,8 @@ public function menu_delete()
     }
     public function order_get()
     {
+        $this->auth();
+
         $id = $this->get('id');
  
         if ($id == NULL)
@@ -577,6 +597,8 @@ public function menu_delete()
         }
     }
     public function order_put(){
+        $this->auth();
+
         $id = (int) $this->get('id');
         if($id){
             $where = [
@@ -619,6 +641,7 @@ public function menu_delete()
      }
      public function order_delete()
     {
+        $this->auth();
 
         $id = (int) $this->get('id');
 
@@ -691,9 +714,10 @@ public function menu_delete()
     {
         if($user){
             $where = [
-                'user'=> $user
+                'meja'=> $user
             ];
             $getUserById = $this->Crud->readData('*','keranjang',$where)->result();
+
 
             if($getUserById){
                 $output = [
@@ -787,6 +811,7 @@ public function menu_delete()
 
     public function pesanan_get()
     {
+        $this->auth();
 
         $id = $this->get('id');
 
@@ -849,7 +874,7 @@ public function menu_delete()
     {
         if($user){
             $where = [
-                'nama'=> $user
+                'meja'=> $user
             ];
             $getUserById = $this->Crud->readData('*','pesanan',$where)->result();
 

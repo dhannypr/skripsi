@@ -101,7 +101,7 @@
 <script src="<?= base_url('assets/js/demo.js')?>"></script>
 <script src="<?= base_url('assets/js/instascan.min.js')?>"></script>
 <script type="text/javascript">
-   
+
 
    let scanner = new Instascan.Scanner({video: document.getElementById('preview')});
     scanner.addListener('scan', function(content){

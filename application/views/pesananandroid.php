@@ -25,7 +25,7 @@
                                                 <td><?= $user['id'];?></td>
                                                 <td><?= $user['tanggal'];?></td>
                                                 <td><?= $user['meja'];?></td>
-                                                <td><?= $user['item'];?></td>
+                                                <td><?= $user['item'];?><br></td>
                                             </tr>
                                             <?php
                                             $no++;

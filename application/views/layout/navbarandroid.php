@@ -13,15 +13,7 @@
                            
                            
                         </ul>
-                        <ul class="navbar-nav ml-auto">
-
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('android/logout') ?>">
-                                <i class="nc-icon nc-user-01"></i>Logout
-                                </a>
-                            </li>
-                        </ul>
+                     
                     </div>
                 </div>
             </nav>
