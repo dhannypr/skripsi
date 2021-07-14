@@ -64,7 +64,7 @@
              </button>
                         </div>
                                  <div class="modal-body">
-                                <form method="POST" enctype="multipart/form-data" action="<?= base_url('dashboard/create_menu'); ?>">
+                        <form method="POST" enctype="multipart/form-data" action="<?= base_url('dashboard/create_menu'); ?>">
                                 <div class="form-group">
                                 <label for="exampleInputEmail1">Nama</label>
                                  <input type="text" class="form-control" name="name" required>

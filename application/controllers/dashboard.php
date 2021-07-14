@@ -354,72 +354,8 @@ class Dashboard extends CI_Controller {
                      
                      }
 
-                      public function create_menu(){
-                        if($this->session->userdata('token') == ''){
-                          return redirect(base_url('dashboard/login'));
-                        }else{
-                          if($this->session->userdata('isLoginAdmin') == true){
-                            $data = [
-                              'username' => $this->session->userdata('username'),
-                              'title' => 'Dashboard | Menu'
-                            ];
-                            $dataCreate = [
-                              'name'=> $this->input->post('name'),
-                              'price'=> $this->input->post('price'),
-                              'type'=> $this->input->post('type')
-                            ];
-                    
-                            $config = array(
-                              'upload_path' => "./uploads/",             //path for upload
-                              'allowed_types' => "gif|jpg|png|jpeg",   //restrict extension
-                              'max_size' => '10000',
-                              'max_width' => '10242',
-                              'max_height' => '768323',
-                              'file_name' => 'menu_'.date('ymdhis')
-                              );
-                    
-                              $this->load->library('upload',$config);
-                    
-                              if($this->upload->do_upload('image')) 
-                              {
-                    
-                                $data = array('upload_data' => $this->upload->data());
-                                $path = $config['upload_path'].'/'.$data['upload_data']['orig_name'];
-                                $filename = $data['upload_data']['orig_name'];
-                                $dataCreate['image'] = $filename;
-                  
-                                $url = base_url('/api/main/menu');
-                                $curl = curl_init($url);
-                                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-                            
-                                curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                                  'Authorization: Bearer '.$this->session->userdata('token')
-                                  )
-                                );
-                        
-                                /* Set JSON data to POST */
-                                curl_setopt($curl, CURLOPT_POSTFIELDS, $dataCreate);
-                        
-                                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
-                                // Send the request
-                                $result = curl_exec($curl);
-                                // Free up the resources $curl is using
-                                curl_close($curl);
-                        
-                                $getMenu = json_decode($result,true);
-                                $menu['datamenu'] = $getMenu['data'];
-                        
-                                
-                                echo ("<script LANGUAGE='JavaScript'>
-                                window.alert('Berhasil di simpan');
-                                window.location.href='".base_url('dashboard/list_menu')."';
-                                </script>");
-                                return;
-                  
-                            }
-                        }
-                      }
-    }
+                      
+    
                           public function edit_menu($id){
                             if($this->session->userdata('token') == ''){
                               return redirect(base_url('dashboard/login'));
@@ -921,7 +857,75 @@ class Dashboard extends CI_Controller {
                               }
                             }
                           }                    
+                          public function create_menu(){
+                            if($this->session->userdata('token') == ''){
+                              return redirect(base_url('dashboard/login'));
+                            }else{
+                              if($this->session->userdata('isLoginAdmin') == true){
+                                $data = [
+                                  'username' => $this->session->userdata('username'),
+                                  'title' => 'Dashboard | Menu'
+                                ];
+                                $dataCreate = [
+                                  'name'=> $this->input->post('name'),
+                                  'price'=> $this->input->post('price'),
+                                  'type'=> $this->input->post('type')
+                                ];
+    
+                                $config = array(
+                                  'upload_path' => "./uploads/",             //path for upload
+                                  'allowed_types' => "gif|jpg|png|jpeg",   //restrict extension
+                                  'max_size' => '1000000',
+                                  'max_width' => '10242',
+                                  'max_height' => '768323',
+                                  'file_name' => 'menu_'.date('ymdhis')
+                                  );
+                        
+                                  $this->load->library('upload',$config);
+                        
+                                  if($this->upload->do_upload('image')) 
+                                  {
+                        
+                                      $data = array('upload_data' => $this->upload->data());
+                                      $path = $config['upload_path'].'/'.$data['upload_data']['orig_name'];
+                                      $filename = $data['upload_data']['orig_name'];
+                                      $dataCreate['image'] = $filename;
+                        
+                                      $url = base_url('/api/main/menu');
+                                      $curl = curl_init($url);
+                                      curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+                                  
+                                      curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                                        'Authorization: Bearer '.$this->session->userdata('token')
+                                        )
+                                      );
+                              
+                                      /* Set JSON data to POST */
+                                      curl_setopt($curl, CURLOPT_POSTFIELDS, $dataCreate);
+                              
+                                      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+                                      // Send the request
+                                      $result = curl_exec($curl);
+                                      // Free up the resources $curl is using
+                                      curl_close($curl);
+                              
+                                      $getMenu = json_decode($result,true);
+                                      $menu['datamenu'] = $getMenu['data'];
+                              
+                                      
+                                      echo ("<script LANGUAGE='JavaScript'>
+                                      window.alert('Berhasil di simpan');
+                                      window.location.href='".base_url('dashboard/list_menu')."';
+                                      </script>");
+                                      return;
+                        
+                                  }else{
+                                    echo $this->upload->display_errors() ;
+                                  }
+                            }
+                          }
                         }
+                      }
           
 
        
